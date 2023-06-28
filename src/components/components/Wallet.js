@@ -35,11 +35,11 @@ const Wallet = () => {
         if(provider.network !== "matic"){
             await window.ethereum.request({
                 method: "wallet_addEthereumChain",
-                // params: [
-                //     {
-                //         ...networks["polygon"]
-                //     }
-                // ]
+                params: [
+                    {
+                        ...networks["polygon"]
+                    }
+                ]
             })
             const account = provider.getSigner();
             const Address = await account.getAddress();
