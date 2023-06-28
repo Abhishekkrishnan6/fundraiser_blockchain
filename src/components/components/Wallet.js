@@ -34,12 +34,12 @@ const Wallet = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum,"any");
         if(provider.network !== "matic"){
             await window.ethereum.request({
-                method: "wallet_addEthereumChain",
-                params: [
-                    {
-                        ...networks["polygon"]
-                    }
-                ]
+                // method: "wallet_addEthereumChain",
+                // params: [
+                //     {
+                //         ...networks["polygon"]
+                //     }
+                // ]
             })
             const account = provider.getSigner();
             const Address = await account.getAddress();
