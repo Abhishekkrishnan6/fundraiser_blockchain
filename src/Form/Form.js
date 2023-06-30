@@ -12,6 +12,8 @@ const Form = () => {
         requiredAmount: "",
         category: "Education",
     });
+    const[storyUrl,setStoryUrl]=useState();
+    const[imageUrl,setImageUrl]=useState();
     const Formhandler =(e)=>{
         setform({
             ...form,
@@ -22,8 +24,9 @@ const Form = () => {
     const ImageHandler = (e)=>{
         setimage(e.target.files[0]);
     }
+   
   return (
-    <FormState.Provider value={{form,setform,image,setimage,ImageHandler,Formhandler}}>
+    <FormState.Provider value={{form,setform,image,setimage,ImageHandler,Formhandler,setImageUrl,setStoryUrl}}>
     <FormWrapper>
         
         <FormMain>

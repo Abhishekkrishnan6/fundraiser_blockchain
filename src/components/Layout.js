@@ -10,6 +10,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const App = createContext();
 const Layout = ({children}) => {
   const [theme,setTheme] = useState('light');
@@ -20,6 +22,7 @@ const Layout = ({children}) => {
 
     <App.Provider value={{changetheme, theme}}>
    <ThemeProvider theme={Themes[theme]}>
+    <ToastContainer />
     <LayoutWrapper >
       <GlobalStyle />
     

@@ -2,9 +2,57 @@ import { Button } from '@mui/material';
 import React from 'react'
 import styled from 'styled-components';
 import { FormState } from '../Form';
-import { useContext } from 'react';
+import { useContext,useState } from 'react';
+import { toast } from 'react-toastify';
+import { TailSpin } from 'react-loader-spinner';
+import { Buffer } from 'buffer';
+import {create as IPFSHTTPClient} from 'ipfs-http-client';
+const projectId='';
+const projectSeceret='';
+const auth = 'Basic ' + Buffer.from(projectId + ":" + projectSeceret).toString('base64')
+const client = IPFSHTTPClient({
+    host:'ipfs.infura.io',
+    port:5001,
+    protocol:'https',
+    headers:{
+        authorization: auth
+    }
+})
 const FormRightWrapper = () => {
     const Handler = useContext(FormState)
+    const[uploading,setuploading]=useState(false);
+    const[uploaded,setuploaded]=useState(false);
+    
+    const uploadFiles = async(e) =>{
+       e.preventDefault();
+       setuploading(true);
+       if(Handler.form.story !== ""){
+        try{
+          const added =  await client.add(Handler.form.story);
+           Handler.setStoryUrl(added.path)
+        }
+        catch(error){
+            toast.warn(`Error Uploading Story`);
+        }
+       } 
+       if(Handler.image !== null){
+        try{
+            const added = await client.add(Handler.image);
+            Handler.setImageUrl(added.path)
+        }
+        catch(error){
+            toast.warn(`Error Uploading Image`);
+        }
+       } 
+       setuploading(false);
+       setuploaded(true);
+       toast.success("Files Uploaded Successfully");
+       //console.log(Handler.setStoryUrl);
+       console.log(Handler.image);
+
+    }
+
+
 
   return (
    
@@ -40,11 +88,17 @@ const FormRightWrapper = () => {
     <FormInput>
 
         <label>Select Image</label>
-        <ImageWrapper onChange={Handler.ImageHandler} name='image' type='file' accept='image/*'></ImageWrapper>
+        <ImageWrapper onChange={Handler.ImageHandler}  type='file' accept='image/*'></ImageWrapper>
     </FormInput>
-<ButtonWrapper>
-    Upload Files to IPFS
+{ uploading == true ? <ButtonWrapper><TailSpin color='#fff' height={20}/> </ButtonWrapper>:
+ uploaded == false ? 
+ <ButtonWrapper onClick={uploadFiles}>
+  Upload Files to IPFS
+</ButtonWrapper> 
+: <ButtonWrapper style={{cursor: "no-drop"}}>
+File Uploaded successfully
 </ButtonWrapper>
+}
 <ButtonWrapper>
     Start Campaign
 </ButtonWrapper>
@@ -129,6 +183,8 @@ font-weight: bold;
 
 `
 const ButtonWrapper=styled.button`
+display: flex;
+justify-content: center;
 width: 100%;
 padding: 15px;
 color: white;
