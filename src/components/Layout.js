@@ -2,6 +2,14 @@ import Header1 from './Header1';
 import Themes from './themes';
 import styled, {ThemeProvider, createGlobalStyle} from 'styled-components'
 import  {useState, createContext}  from 'react';
+import Createcampaign from './components/Createcampaign';
+import Dashboard from './components/Dashboard';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 const App = createContext();
 const Layout = ({children}) => {
   const [theme,setTheme] = useState('light');
@@ -14,8 +22,23 @@ const Layout = ({children}) => {
    <ThemeProvider theme={Themes[theme]}>
     <LayoutWrapper >
       <GlobalStyle />
-    <Header1 />
+    
      {children}
+
+     <Router>
+    
+     <Header1 />
+      <Routes>
+         
+        <Route path = '/dashboard' element={<Dashboard/>}></Route> 
+        <Route path = '/createcampaign' element={<Createcampaign/>}></Route> 
+       
+      </Routes>
+     
+     </Router>
+    
+     
+
      </LayoutWrapper>
     </ThemeProvider>
    

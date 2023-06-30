@@ -94,12 +94,14 @@ padding: 0 5px 0 5px;
 border-radius:10px;
 `
 const Balancess = styled.h2`
+background-color: ${(props)=> props.theme.bgSubDiv};
 display: flex;
 height: 100%;
 align-items: center;
 justify-content: center;
 margin-right: 5px;
-
+padding: 0 5px 0 5px;
+border-radius:10px;
 
 `
 export default Wallet
