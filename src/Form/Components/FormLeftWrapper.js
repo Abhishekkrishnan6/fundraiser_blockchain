@@ -1,19 +1,21 @@
 import { Input } from 'postcss';
 import React from 'react'
 import styled from 'styled-components';
-
+import { FormState } from '../Form';
+import { useContext } from 'react';
 const FormLeftWrapper = () => {
+    const Handler = useContext(FormState);
   return (
     <FormLeft>
         
         <FormInput>
             <label>Campaign Title</label>
-            <InputWrapper placeholder='Campaign Title'>
+            <InputWrapper value={Handler.form.campaignTitle}  onChange={(event) => Handler.setform({...Handler.form, campaignTitle: event.target.value})} placeholder='Campaign Title' name='campaignTitle'>
             </InputWrapper>
         </FormInput>
         <FormInput>
             <label>Story</label>
-            <TextArea placeholder='Describe Your Story'>
+            <TextArea  value={Handler.form.story}  onChange={(event) => Handler.setform({...Handler.form, story: event.target.value})} placeholder='Describe Your Story' name='story'>
             </TextArea>
         </FormInput>
        

@@ -1,20 +1,25 @@
 import { Button } from '@mui/material';
 import React from 'react'
 import styled from 'styled-components';
+import { FormState } from '../Form';
+import { useContext } from 'react';
 const FormRightWrapper = () => {
+    const Handler = useContext(FormState)
+
   return (
+   
 <FormRight>
    <FormInput>
        <FormRow>
         <RowFirstInput>
             <label>Required Amount</label>
-            <InputWrapper type='number' placeholder='Required Amount'>
+            <InputWrapper  value={Handler.form.requiredAmount}  onChange={(event) => Handler.setform({...Handler.form, requiredAmount: event.target.value})}  type='number' placeholder='Required Amount' name='requiredAmount'>
             </InputWrapper>
         </RowFirstInput>
 
         <RowSecondInput>
             <label>Choose Category</label>
-            <SelectWrapper > 
+            <SelectWrapper value={Handler.form.category}  onChange={(event) => Handler.setform({...Handler.form, category: event.target.value})} name='category'> 
                 <option>
                 Education
                 </option>
@@ -29,13 +34,13 @@ const FormRightWrapper = () => {
 
 
         </FormRow>
-    </FormInput>
+    </FormInput>   
 
 
     <FormInput>
 
         <label>Select Image</label>
-        <ImageWrapper type='file' accept='image/*'></ImageWrapper>
+        <ImageWrapper onChange={Handler.ImageHandler} name='image' type='file' accept='image/*'></ImageWrapper>
     </FormInput>
 <ButtonWrapper>
     Upload Files to IPFS
@@ -134,7 +139,5 @@ margin-top: 30px;
 cursor: pointer;
 font-weight: bold;
 font-size: large;
-
 `
-
 export default FormRightWrapper
