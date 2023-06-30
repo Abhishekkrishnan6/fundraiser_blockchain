@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Form from '../../Form/Form'
 const Createcampaign = () => {
   return (
-    <div>Createcampaign</div>
+    <div>
+
+      <Form />
+    </div>
   )
 }
 
