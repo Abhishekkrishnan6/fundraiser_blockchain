@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import { TailSpin } from 'react-loader-spinner';
 import { Buffer } from 'buffer';
 import {create as IPFSHTTPClient} from 'ipfs-http-client';
+import  {ethers} from 'ethers';
+import CampaignFactory from '../../artifacts/contracts/Campaign.sol/CampaignFactory.json'
 const projectId='';
 const projectSeceret='';
 const auth = 'Basic ' + Buffer.from(projectId + ":" + projectSeceret).toString('base64')
@@ -19,6 +21,7 @@ const client = IPFSHTTPClient({
     }
 })
 const FormRightWrapper = () => {
+    const contractAddresss = ""
     const Handler = useContext(FormState)
     const[uploading,setuploading]=useState(false);
     const[uploaded,setuploaded]=useState(false);
@@ -47,12 +50,53 @@ const FormRightWrapper = () => {
        setuploading(false);
        setuploaded(true);
        toast.success("Files Uploaded Successfully");
-       //console.log(Handler.setStoryUrl);
-       console.log(Handler.image);
+       console.log(Handler.StoryUrl);
+       //console.log(Handler.image);
 
     }
 
+const startcampaign = async (e)=>{
+    e.preventDefault();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+     if(Handler.form.campaignTitle===""){
+        toast.warn("Title Field Is Empty");
+     }
+     else if(Handler.form.story===""){
+        toast.warn("Story Field Is Empty");
+     }
+     else if(Handler.form.requiredAmount===""){
+        toast.warn("RequiredAmount Field Is Empty");
+     }
+     else if(Handler.form.uploaded===false){
+        toast.warn("Files Upload Required");
+     }
+     else{
+        console.log("error");
+        Handler.setloading(true);
+        const contract = new ethers.Contract(
+            contractAddresss,
+            CampaignFactory.abi,
+            signer
 
+        );
+        
+        console.log("Started new campaign ......");
+        console.log(Handler.imageUrl);
+        const campaignData = await contract.createCampaign(
+             Handler.form.campaignTitle,
+            parseInt(Handler.form.requiredAmount),
+            Handler.imageUrl,
+            Handler.form.category,
+            Handler.storyUrl
+            
+        );
+        await campaignData.wait();   
+          Handler.setaddress(campaignData.to);
+
+     }
+
+}
 
   return (
    
@@ -99,7 +143,7 @@ const FormRightWrapper = () => {
 File Uploaded successfully
 </ButtonWrapper>
 }
-<ButtonWrapper>
+<ButtonWrapper onClick={startcampaign}>
     Start Campaign
 </ButtonWrapper>
 
