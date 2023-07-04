@@ -10,10 +10,15 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Homes from './Homes'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ethers } from 'ethers';
+import CampaignFactory from '../artifacts/contracts/Campaign.sol/CampaignFactory.json'
 const App = createContext();
 const Layout = ({children}) => {
+
+
   const [theme,setTheme] = useState('light');
   const changetheme =() =>{
     setTheme(theme=="light"?"dark":"light");
@@ -32,7 +37,7 @@ const Layout = ({children}) => {
     
      <Header1 />
       <Routes>
-         
+        <Route path = '/' element={<Homes/>}></Route>
         <Route path = '/dashboard' element={<Dashboard/>}></Route> 
         <Route path = '/createcampaign' element={<Createcampaign/>}></Route> 
        
