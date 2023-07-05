@@ -3,7 +3,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import PaidIcon from '@mui/icons-material/Paid';
 import EventIcon from '@mui/icons-material/Event';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ethers } from 'ethers';
 import CampaignFactory from '../artifacts/contracts/Campaign.sol/CampaignFactory.json'
 import { useState,useEffect } from 'react';
@@ -15,7 +15,7 @@ export default function Index() {
   const [AnimalData, setAnimalData] = useState();
   useEffect(()=>{
     async function getdata(){
-      const contractAddresss = "0x2310160A5b89AB02620E2087429a4C1B37DF11Bb"
+      const contractAddresss = "0xDD4C0a2c031d003C3f3d1863063aF4554F9C6814"
       const provider = new ethers.providers.JsonRpcProvider(
         "https://sepolia.infura.io/v3/ead4798d643d4f1ea18dff99d6a87ab7"
        );
@@ -29,22 +29,25 @@ export default function Index() {
   const AllData = AllCampaigns.map((e) => {
         return {
       title: e.args.title,
-      image: e.args.imgURI,
+      image: e.args.imgurl,
       owner: e.args.owner,
       timeStamp: parseInt(e.args.timestamp),
-      address: e.args.campaignaddress,
-      amount: parseInt(e.args.requiredamount),
-        }
+      
+      amount: ethers.utils.formatEther(e.args.requiredamount),
+      address: e.args.campaignaddress    
+    
+    }
       });
+      setFilter(AllData);
     setdata(AllData);
-    setFilter(AllData);
+    
     }
     getdata();
  
   },[])
   useEffect(()=>{
     async function getdata(){
-      const contractAddresss = "0x2310160A5b89AB02620E2087429a4C1B37DF11Bb"
+      const contractAddresss = "0xDD4C0a2c031d003C3f3d1863063aF4554F9C6814"
       const provider = new ethers.providers.JsonRpcProvider(
         "https://sepolia.infura.io/v3/ead4798d643d4f1ea18dff99d6a87ab7"
        );
@@ -58,11 +61,12 @@ export default function Index() {
   const HealthData = HealthCampaigns.map((e) => {
     return {
       title: e.args.title,
-      image: e.args.imgURI,
+      image: e.args.imgurl,
       owner: e.args.owner,
       timeStamp: parseInt(e.args.timestamp),
-      address: e.args.campaignaddress,
-      amount: parseInt(e.args.requiredamount),
+      
+      amount: ethers.utils.formatEther(e.args.requiredamount),
+      address: e.args.campaignaddress 
     }
   });
   sethealth(HealthData)
@@ -73,7 +77,7 @@ export default function Index() {
 
   useEffect(()=>{
     async function getdata(){
-      const contractAddresss = "0x2310160A5b89AB02620E2087429a4C1B37DF11Bb"
+      const contractAddresss = "0xDD4C0a2c031d003C3f3d1863063aF4554F9C6814"
       const provider = new ethers.providers.JsonRpcProvider(
         "https://sepolia.infura.io/v3/ead4798d643d4f1ea18dff99d6a87ab7"
        );
@@ -89,11 +93,12 @@ export default function Index() {
      const EducationData = EducationCampaigns.map((e) => {
     return {
       title: e.args.title,
-      image: e.args.imgURI,
+      image: e.args.imgurl,
       owner: e.args.owner,
       timeStamp: parseInt(e.args.timestamp),
-      address: e.args.campaignaddress,
-      amount: parseInt(e.args.requiredamount),
+      
+      amount: ethers.utils.formatEther(e.args.requiredamount),
+      address: e.args.campaignaddress 
     }
   });
   setEducationData(EducationData)
@@ -106,7 +111,7 @@ export default function Index() {
   
   useEffect(()=>{
     async function getdata(){
-      const contractAddresss = "0x2310160A5b89AB02620E2087429a4C1B37DF11Bb"
+      const contractAddresss = "0xDD4C0a2c031d003C3f3d1863063aF4554F9C6814"
       const provider = new ethers.providers.JsonRpcProvider(
         "https://sepolia.infura.io/v3/ead4798d643d4f1ea18dff99d6a87ab7"
        );
@@ -122,12 +127,12 @@ export default function Index() {
   const AnimalData = AnimalCampaigns.map((e) => {
     return {
       title: e.args.title,
-      image: e.args.imgURI,
+      image: e.args.imgurl,
       owner: e.args.owner,
       timeStamp: parseInt(e.args.timestamp),
       
-      address: e.args.campaignaddress,
-      //amount: parseInt(e.args.requiredamount),
+      amount: ethers.utils.formatEther(e.args.requiredamount),
+      address: e.args.campaignaddress 
     }
   });
   setAnimalData(AnimalData)
@@ -178,11 +183,11 @@ export default function Index() {
             <Text><EventIcon /></Text>
             <Text>{new Date(e.timeStamp * 1000).toLocaleString()}</Text>
           </CardData>
-          <NavLink  href={'/' + e.address}>
+          <Link  to={'/' + e.address}>
             <Button>
-            Go to Campaign
+            Go to Campaign 
           </Button>
-          </NavLink>
+          </Link>
         </Card>
         )
       })}

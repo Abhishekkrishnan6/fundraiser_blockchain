@@ -21,7 +21,7 @@ const client = IPFSHTTPClient({
     }
 })
 const FormRightWrapper = () => {
-    const contractAddresss = "0x2310160A5b89AB02620E2087429a4C1B37DF11Bb"
+    const contractAddresss = "0xDD4C0a2c031d003C3f3d1863063aF4554F9C6814"
     const Handler = useContext(FormState)
     const[uploading,setuploading]=useState(false);
     const[uploaded,setuploaded]=useState(false);
@@ -90,7 +90,7 @@ const startcampaign = async (e)=>{
             Handler.form.category,
             Handler.storyUrl
             
-        );
+        );  
         await campaignData.wait();   
           Handler.setaddress(campaignData.to);
 

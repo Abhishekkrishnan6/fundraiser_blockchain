@@ -22,7 +22,8 @@ contract CampaignFactory{
                 campaigntitle,
                 requiredcampaignamount,
                 imgurl,
-                storyurl
+                storyurl,
+                msg.sender
             );
             deloyedCampaigns.push(address(newcampaign));
             emit campaigncreated(campaigntitle, requiredcampaignamount, msg.sender, address(newcampaign), imgurl, block.timestamp, category);
@@ -41,14 +42,15 @@ constructor(
     string memory campaigntitle,
     uint requiredcampaignamount,
     string memory imgurl,
-    string memory storyurl
+    string memory storyurl,
+    address campaignowner
 ){
     title =campaigntitle;
     requiredamout = requiredcampaignamount;
     image = imgurl;
     story = storyurl;
-    owner = payable(msg.sender);
-
+    owner = payable(campaignowner);
+    
 }
 
 function donate() public payable{

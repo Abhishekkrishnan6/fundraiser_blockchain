@@ -4,6 +4,7 @@ import styled, {ThemeProvider, createGlobalStyle} from 'styled-components'
 import  {useState, createContext}  from 'react';
 import Createcampaign from './components/Createcampaign';
 import Dashboard from './components/Dashboard';
+import Detail from './Detail';
 import {
   BrowserRouter as Router,
   Routes,
@@ -40,6 +41,7 @@ const Layout = ({children}) => {
         <Route path = '/' element={<Homes/>}></Route>
         <Route path = '/dashboard' element={<Dashboard/>}></Route> 
         <Route path = '/createcampaign' element={<Createcampaign/>}></Route> 
+        <Route path="/:userId" element={<Detail />} />
        
       </Routes>
      
